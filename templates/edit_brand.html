@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit Brand - Tuta Store
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-2xl font-bold">Edit Brand</h1>
+
+    <form action="{{ url_for('edit_brand', brand_id=brand.id) }}" method="POST" enctype="multipart/form-data">
+
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 font-bold mb-2">Brand Name:</label>
+            <input type="text" name="name" id="name" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" value="{{ brand.name }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="image" class="block text-gray-700 font-bold mb-2">Brand Image:</label>
+            <label for="image" class="relative cursor-pointer">
+              <img src="{{ brand.image }}" alt="Brand Logo" class="w-40 h-40 object-cover mb-2">
+              <img id="image-preview" src="#" alt="Brand Logo Preview" class="w-40 h-40 object-cover mb-2 hidden">
+              <span class="text-white px-2 py-1 rounded m-2 cursor-pointer">Change Image</span>
+            </label>
+            <input type="file" name="image" id="image" class="border border-gray-300 rounded hidden" accept="image/*" onchange="previewImage(event)">
+          </div>
+          
+        
+
+        <div class="mb-4">
+            {% if brand.image %}
+            <img id="image-preview" src="#" alt="Brand Logo Preview" class="w-40 h-40 object-cover mb-2 hidden">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+        </div>
+
+        <div class="mb-4">
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Update Brand</button>
+            <a href="{{ url_for('brands') }}" class="px-4 py-2 bg-gray-300 text-gray-700 font-bold rounded hover:bg-gray-400">Cancel</a>
+        </div>
+    </form>
+    <script>
+        function previewImage(event) {
+          var input = event.target;
+          var preview = document.getElementById('image-preview');
+      
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+      
+            reader.onload = function(e) {
+              preview.src = e.target.result;
+              preview.classList.remove('hidden');
+            };
+      
+            reader.readAsDataURL(input.files[0]);
+          } else {
+            preview.src = "#";
+            preview.classList.add('hidden');
+          }
+        }
+      </script>
+      
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+    <h1 class="px-4">Add Product</h1>
+    <form method="post" action="{{ url_for('add_product') }}" class="px-4" enctype="multipart/form-data">
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700">Name:</label>
+            <input type="text" name="name" id="name" class="border border-gray-300 rounded-md px-3 py-2">
+        </div>
+        <div class="mb-4">
+            <label for="price" class="block text-gray-700">Price:</label>
+            <input type="text" name="price" id="price" class="border border-gray-300 rounded-md px-3 py-2">
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700">Description:</label>
+            <textarea name="description" id="description" class="border border-gray-300 rounded-md px-3 py-2"></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="categories" class="block text-gray-700">Categories:</label>
+            {% for category in categories %}
+                <div>
+                    <input type="checkbox" name="categories" value="{{ category.id }}" id="category{{ category.id }}" class="border border-gray-300 px-3 py-2">
+                    <label for="category{{ category.id }}">{{ category.name }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mb-4">
+            <label for="brand" class="block text-gray-700">Brand:</label>
+            <select name="brand" id="brand" class="border border-gray-300 rounded-md px-3 py-2">
+                {% for brand in brands %}
+                    <option value="{{ brand.id }}">{{ brand.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="image" class="block text-gray-700">Image:</label>
+            <input type="file" name="image" id="image" class="border border-gray-300 rounded-md px-3 py-2" onchange="previewImage(event)">
+        </div>
+        <div id="imagePreview"></div>
+        
+        <div class="mb-4">
+            <input type="checkbox" name="featured" id="featured" class="border border-gray-300 px-3 py-2">
+            <label for="featured" class=" text-gray-700">Featured</label>
+        </div>
+        <div class="mb-4">
+            <input type="submit" value="Add Product" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+        </div>
+    </form>
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('imagePreview');
+    
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    const image = document.createElement('img');
+                    image.src = e.target.result;
+                    image.classList.add('mt-2', 'max-w-full', 'rounded-md', 'w-[200px]', 'h-[200px]');
+                    image.style.objectFit = 'cover';
+                   // image.style.maxHeight = '200px'; // Adjust the maximum height as desired
+                    preview.innerHTML = '';
+                    preview.appendChild(image);
+                };
+    
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.innerHTML = '';
+            }
+        }
+    </script>
+    
+{% endblock %}

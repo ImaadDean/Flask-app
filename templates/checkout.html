@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - Tuta Store{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center h-full">
+  <div>
+    <h1 class="text-2xl font-bold mb-4">Checkout</h1>
+
+    <form method="post" action="{{ url_for('checkout') }}" class="p-4">
+      <div class="mb-4">
+        <label for="name" class="block font-bold text-gray-700">Name</label>
+        <input class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" type="text" id="name" name="name" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="email" class="block font-bold text-gray-700">Email</label>
+        <input class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" type="email" id="email" name="email" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="city" class="block font-bold text-gray-700">City</label>
+        <input class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" type="text" id="city" name="city" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="address" class="block font-bold text-gray-700">Address</label>
+        <textarea class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" id="address" name="address" required></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label for="telephone" class="block font-bold text-gray-700">Telephone</label>
+        <input class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" type="text" id="telephone" name="telephone" required>
+      </div>
+
+      <!-- Order Summary -->
+      <h2 class="text-lg font-bold mb-2">Order Summary</h2>
+      <table class="border-collapse border w-full mb-4">
+        <thead>
+          <tr>
+            <th class="border px-4 py-2">Item</th>
+            <th class="border px-4 py-2">Quantity</th>
+            <th class="border px-4 py-2">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cart_item in cart_items %}
+          <tr>
+            <td class="border px-4 py-2">{{ cart_item.item.name }}</td>
+            <td class="border px-4 py-2">{{ cart_item.quantity }}</td>
+            <td class="border px-4 py-2">{{ cart_item.item.price }}</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td class="border px-4 py-2 font-bold" colspan="2">Total Price:</td>
+            <td class="border px-4 py-2 font-bold">UGX{{ total_price }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Place Order
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

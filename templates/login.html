@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Tuta Store{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold px-4">Login</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert p-4">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" class="p-4">
+    <div class="mb-4">
+      <label for="username" class="block font-bold text-gray-700">Username:</label>
+      <input type="text" id="username" name="username" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" required>
+    </div>
+
+    <div class="mb-4">
+      <label for="password" class="block font-bold text-gray-700">Password:</label>
+      <input type="password" id="password" name="password" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" required>
+    </div>
+
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Login
+    </button>
+  </form>
+
+  <p class="mt-4 px-4">
+    Don't have an account? <a href="{{ url_for('register') }}" class="text-blue-500">Register here</a>.
+  </p>
+{% endblock %}

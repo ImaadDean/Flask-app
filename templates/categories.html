@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories - Tuta Store{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-4 px-4">Categories</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert p-4">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <a href="{{ url_for('add_category') }}" class="text-blue-500 mb-4 px-4">Add Category</a>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {% for category in categories %}
+      <div class="bg-white p-4 shadow rounded sm:mx-2">
+        <img src="{{ category.image }}" alt="Category Image" class="w-full h-40 object-cover mb-2">
+        <h2 class="text-lg font-bold">{{ category.name }}</h2>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Banners - Tuta Store
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-2xl font-bold">Banners</h1>
+
+    <ul>
+        {% for banner in banners %}
+            <li>
+                <img src="{{ banner.image }}" alt="Banner Image" class="banner-img">
+                <div class="banner-content">
+                    <p class="banner-subtitle">{{ banner.subtitle }}</p>
+                    <h2 class="banner-title">{{ banner.title }}</h2>
+                    <p class="banner-text">{{ banner.text }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

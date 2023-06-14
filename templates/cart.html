@@ -1,0 +1,79 @@
+<!-- cart.html -->
+{% extends 'base.html' %}
+
+{% block title %}Cart - Tuta Store{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center h-full">
+  <div>
+    <h1 class="text-2xl font-bold mb-4">Cart</h1>
+
+    {% if cart_items %}
+    <div class="overflow-x-auto">
+      <table class="border-collapse border w-full">
+        <thead>
+          <tr>
+            <th class="border px-4 py-2">Image</th>
+            <th class="border px-4 py-2">Item</th>
+            <th class="border px-4 py-2">Quantity</th>
+            <th class="border px-4 py-2">Price</th>
+            <th class="border px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cart_item in cart_items %}
+          <tr>
+            <td class="border px-4 py-2">
+              <img src="{{ cart_item.item.image }}" alt="{{ cart_item.item.name }}" class="w-16 h-16 object-cover">
+            </td>
+            <td class="border px-4 py-2">{{ cart_item.item.name }}</td>
+
+            <td class="border px-4 py-2">
+              <div class="flex items-center">
+                <form class="flex" method="get" action="{{ url_for('update_quantity', cart_item_id=cart_item.id) }}">
+                  <input type="hidden" name="quantity" value="{{ cart_item.quantity - 1 }}">
+                  <button type="submit" class="text-blue-600 hover:text-blue-800 px-2">
+                    -
+                  </button>
+                </form>
+                <span class="px-2">{{ cart_item.quantity }}</span>
+                <form class="flex" method="get" action="{{ url_for('update_quantity', cart_item_id=cart_item.id) }}">
+                  <input type="hidden" name="quantity" value="{{ cart_item.quantity + 1 }}">
+                  <button type="submit" class="text-blue-600 hover:text-blue-800 px-2">
+                    +
+                  </button>
+                </form>
+              </div>
+            </td>
+            <td class="border px-4 py-2">{{ cart_item.item.price }}</td>
+
+            <td class="border px-4 py-2">
+              <form method="post" action="{{ url_for('remove_from_cart', cart_item_id=cart_item.id) }}">
+                <input type="hidden" name="_method" value="POST">
+                <input type="submit" value="Remove" class="text-red-600 hover:text-red-800">
+              </form>
+            </td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="border px-4 py-2 font-bold" colspan="3">Total Price:</td>
+            <td class="border px-4 py-2">UGX{{ total_price }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="mt-4 text-center">
+      <a href="{{ url_for('checkout') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded">
+        Proceed to Checkout
+      </a>
+    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

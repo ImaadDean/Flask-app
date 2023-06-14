@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Orders - My App
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-2xl font-bold mb-4 px-2">Orders</h1>
+
+    {% for order in orders %}
+        <div class="border border-gray-200 rounded p-4 mb-4 flex flex-col lg:flex-row">
+            <div class="border border-gray-200 rounded p-4 mb-2">
+                <div class="font-bold">Order:</div>
+                <div class="mb-2">{{ order.name }}</div>
+                <div class="mb-2">{{ order.email }}</div>
+                <div class="mb-2">{{ order.telephone }}</div>
+                <div class="mb-2">{{ order.address }}</div>
+                <div class="mb-2">{{ order.city }}</div>
+            </div>
+            <div class="border border-gray-200 rounded p-4 mb-2">
+                <div class="font-bold">Customer:</div>
+                <div class="mb-2 font-bold">{{ order.user.username }}</div>
+                <div class="mb-2">{{ order.user.email }}</div>
+                <div class="mb-2">{{ order.user.telephone }}</div>
+                <div class="mb-2">{{ order.user.address }}</div>
+                <div class="mb-2">{{ order.user.city }}</div>
+                
+            </div>
+            <div class="border border-gray-200 rounded p-4 mb-2">
+                <div class="font-bold">Order Items:</div>
+                <ul>
+                    {% for item in order.items %}
+                        <li>
+                            <span class="font-bold">{{ item.product.name }}</span> -
+                            <span>UGX {{ item.product.price }}</span> -
+                            <span>Qty: {{ item.quantity }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="border border-gray-200 rounded p-4 mb-2">
+                <div class="font-bold">Total Price:</div>
+                <div class="font-bold">UGX {{ order.total_price }}</div>
+                <div class="font-bold">on {{ order.timestamp_formatted }}</div>
+            </div>
+            <div class="border border-gray-200 rounded p-4 mb-2">
+                <div class="font-bold">Status:</div>
+                {% if order.paid %}
+                    <span class="text-green-500">Paid</span>
+                {% else %}
+                    <span class="text-red-500">Not Paid</span>
+                {% endif %}
+                <br>
+                {% if order.delivered %}
+                    <span class="text-green-500">Delivered</span>
+                {% else %}
+                    <span class="text-red-500">Not Delivered</span>
+                {% endif %}
+            </div>
+            <div class="border border-gray-200 rounded p-4">
+                <form action="{{ url_for('mark_paid', order_id=order.id) }}" method="POST">
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        Mark Paid
+                    </button>
+                </form>
+                <form action="{{ url_for('mark_delivered', order_id=order.id) }}" method="POST" class="mt-4">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Mark Delivered
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

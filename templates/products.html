@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Products - Tuta Store{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-4 px-4">Products</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert p-4">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <a href="{{ url_for('add_product') }}" class="text-blue-500 mb-4 px-4">Add Product</a>
+  <a href="{{ url_for('add_category') }}" class="text-blue-500 mb-4 px-4">Add Category</a>
+  <a href="{{ url_for('add_brand') }}" class="text-blue-500 mb-4 px-4">Add Brand</a> <!-- Add this line -->
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {% for product in products %}
+      <div class="bg-white p-4 shadow rounded">
+        <img src="{{ product.image }}" alt="Product Image" class="w-full h-40 object-cover mb-2">
+        <h2 class="text-lg font-bold">{{ product.name }}</h2>
+        <p class="text-gray-700 mb-2">{{ product.description }}</p>
+        <p class="text-gray-600">
+          Categories:
+          {% for category in product.categories %}
+          <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+            {{ category }}
+          </span>
+          {% endfor %}
+        </p>
+        <p class="text-gray-600">Brand: {{ product.brand.name }}</p>
+        <a href="{{ url_for('delete_product', product_id=product.id) }}" class="text-red-500 hover:text-red-700">Delete</a>
+        <a href="{{ url_for('edit_product', product_id=product.id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

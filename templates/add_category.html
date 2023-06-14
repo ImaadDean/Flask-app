@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Category - Tuta Store{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-4 px-4">Add Category</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert p-4">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('add_category') }}" method="post" class="px-4" enctype="multipart/form-data">
+    <div class="mb-4 ">
+      <label for="name" class="block font-bold mb-2">Category Name:</label>
+      <input type="text" id="name" name="name" class="border border-gray-400 rounded px-4 py-2" required>
+    </div>
+
+    <div class="mb-4">
+      <label for="image" class="block font-bold mb-2">Category Image:</label>
+      <input type="file" id="image" name="image" class="border border-gray-400 rounded px-4 py-2">
+    </div>
+
+    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Add Category</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Product - Tuta Store{% endblock %}
+
+{% block content %}
+  <div class="container mx-auto mt-8">
+    <h1 class="text-2xl font-bold mb-4">Edit Product</h1>
+
+    <form action="{{ url_for('edit_product', product_id=product.id) }}" method="POST" enctype="multipart/form-data">
+      <div class="mb-4">
+        <label for="name" class="block font-semibold mb-2">Product Name</label>
+        <input type="text" id="name" name="name" value="{{ product.name }}" class="border border-gray-300 rounded px-4 py-2 w-full">
+      </div>
+
+      <div class="mb-4">
+        <label for="price" class="block font-semibold mb-2">Price</label>
+        <input type="text" id="price" name="price" value="{{ product.price }}" class="border border-gray-300 rounded px-4 py-2 w-full">
+      </div>
+
+      <div class="mb-4">
+        <label for="description" class="block font-semibold mb-2">Description</label>
+        <textarea id="description" name="description" class="border border-gray-300 rounded px-4 py-2 w-full">{{ product.description }}</textarea>
+      </div>
+
+      <div class="mb-4">
+        <label for="brand" class="block font-semibold mb-2">Brand</label>
+        <select id="brand" name="brand_id" class="border border-gray-300 rounded px-4 py-2 w-full">
+          {% for brand in brands %}
+          <option value="{{ brand.id }}" {% if brand.id == product.brand_id %}selected{% endif %}>{{ brand.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+
+      <div class="mb-4">
+        <label for="image" class="block font-semibold mb-2">Image</label>
+        <input type="file" id="image" name="image" class="border border-gray-300 rounded px-4 py-2 w-full">
+      </div>
+
+      <div class="mb-4">
+        <label class="block font-semibold mb-2">Categories</label>
+        {% for category in categories %}
+          <div>
+            <input type="checkbox" id="category_{{ category.id }}" name="categories" value="{{ category.id }}"
+              {% if category in product.categories %}checked{% endif %}>
+            <label for="category_{{ category.id }}">{{ category.name }}</label>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-4">
+        <label class="block font-semibold mb-2">Featured</label>
+        <input type="checkbox" id="featured" name="featured" {% if product.featured %}checked{% endif %}>
+        <label for="featured">Featured Product</label>
+      </div>
+
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded">Update Product</button>
+    </form>
+    <img src="{{ product.image }}" alt="image ">
+  </div>
+{% endblock %}

@@ -1,0 +1,5 @@
+Flask==2.0.1
+Flask-Mail==0.9.1
+Flask-Login==1.0.0
+Werkzeug==2.0.1
+Flask-SQLAlchemy==3.0.0

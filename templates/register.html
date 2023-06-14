@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Tuta Store{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold px-4">Register</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert p-4">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" class="p-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="mb-4 sm:col-span-1 md:col-span-1 lg:col-span-1">
+      <label for="username" class="block font-bold text-gray-700">Username:</label>
+      <input type="text" id="username" name="username" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" required>
+    </div>
+
+    <div class="mb-4 sm:col-span-1 md:col-span-1 lg:col-span-1">
+      <label for="email" class="block font-bold text-gray-700">Email:</label>
+      <input type="email" id="email" name="email" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" required>
+    </div>
+
+    <div class="mb-4 sm:col-span-1 md:col-span-1 lg:col-span-1">
+      <label for="password" class="block font-bold text-gray-700">Password:</label>
+      <input type="password" id="password" name="password" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" required>
+    </div>
+
+    <div class="mb-4 sm:col-span-1 md:col-span-1 lg:col-span-1">
+      <label for="confirm_password" class="block font-bold text-gray-700">Confirm Password:</label>
+      <input type="password" id="confirm_password" name="confirm_password" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500" required>
+    </div>
+
+    <div class="mb-4 sm:col-span-1 md:col-span-1 lg:col-span-1">
+      <label for="telephone" class="block font-bold text-gray-700">Telephone:</label>
+      <input type="tel" id="telephone" name="telephone" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500">
+    </div>
+
+    <div class="mb-4 sm:col-span-1 md:col-span-1 lg:col-span-1">
+      <label for="city" class="block font-bold text-gray-700">City:</label>
+      <input type="text" id="city" name="city" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500">
+    </div>
+
+    <div class="mb-4 sm:col-span-2 md:col-span-2 lg:col-span-2">
+      <label for="address" class="block font-bold text-gray-700">Address:</label>
+      <textarea id="address" name="address" class="border rounded p-2 w-full focus:outline-none focus:border-blue-500"></textarea>
+    </div>
+    
+    <div>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Register
+      </button>
+    </div>
+  </form>
+
+  <p class=" px-4">
+    Already have an account? <a href="{{ url_for('login') }}" class="text-blue-500">Login here</a>.
+  </p>
+{% endblock %}
