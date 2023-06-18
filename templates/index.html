@@ -1,58 +1,204 @@
-{% extends 'base.html' %}
-
-{% block title %}Home - Tuta Store{% endblock %}
-
-{% block content %}
-<div class="flex justify-center items-center h-full">
-  <div>    
+{% extends 'base.html' %} {% block title %}Home - Tuta Store{% endblock %} {%
+block content %}
+<div class="items-center h-full">
+  <div>
     <div class="banner">
       <div class="container">
-          <div class="slider-container has-scrollbar">
-              {% for banner in banners %}
-              <div class="slider-item">
-                  <img src="{{ banner.image }}" alt="{{ banner.title }}" class="banner-img">
-                  <div class="banner-content">
-                      <p class="banner-subtitle">{{ banner.subtitle }}</p>
-                      <h2 class="banner-title">{{ banner.title }}</h2>
-                      <p class="banner-text">
-                          starting at UGX <b>{{ banner.price }}</b>
-                      </p>
-                      <a href="#" class="banner-btn">Shop now</a>
-                  </div>
-              </div>
-              {% endfor %}
+        <div class="slider-container has-scrollbar">
+          {% for banner in banners %}
+          <div class="slider-item">
+            <img
+              src="{{ banner.image }}"
+              alt="{{ banner.title }}"
+              class="banner-img"
+            />
+            <div class="banner-content">
+              <p class="banner-subtitle">{{ banner.subtitle }}</p>
+              <h2 class="banner-title">{{ banner.title }}</h2>
+              <p class="banner-text">
+                starting at UGX <b>{{ banner.price }}</b>
+              </p>
+              <a href="#" class="banner-btn">Shop now</a>
+            </div>
           </div>
+          {% endfor %}
+        </div>
       </div>
-  </div>
-    {% if products %}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {% for product in products %}
-      <div class="bg-white p-4 shadow rounded w-80 mx-auto">
+    </div>
+    <div class="category">
+      <div class="container">
+        <div class="category-item-container has-scrollbar">
+          {% for category in categories %}
+          <div class="category-item">
+            <div class="category-img-box">
+              <img
+                src="{{ category.image }}"
+                alt="{{ category.name }}"
+                width="30"
+              />
+            </div>
+            <div class="category-content-box">
+              <div class="category-content-flex">
+                <h3 class="category-item-title">{{ category.name }}</h3>
+                <p class="category-item-amount">
+                  ({{ category.products.count() }})
+                </p>
+              </div>
+              <a href="#" class="category-btn">Show all</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      {% for product in featured_products %}
+      <div class="bg-white rounded-lg shadow-md p-4">
         <a href="{{ url_for('product_details', product_id=product.id) }}">
-          <img src="{{ product.image }}" alt="Product Image" class="w-full h-40 object-cover mb-2">
+          <img
+            src="{{ product.image }}"
+            alt="Product Image"
+            class="w-full h-40 object-cover mb-2"
+          />
         </a>
-        <h2 class="text-lg font-bold">{{ product.name }}</h2>
+        <h2 class="text-lg font-semibold">{{ product.name }}</h2>
         <p class="text-gray-600">Price: UGX{{ product.price }}</p>
         <p class="text-gray-600">
-          Categories:
-          {% for category in product.categories %}
-          <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-            {{ category }}
-          </span>
+          Categories: {% for category in product.categories %}
+          <span class="mr-2">{{ category }}</span>
           {% endfor %}
         </p>
         <p class="text-gray-600">Brand: {{ product.brand.name }}</p>
         <form action="/add-to-cart/{{ product.id }}" method="GET">
-          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600 transition duration-300"
+          >
             Add to Cart
           </button>
         </form>
       </div>
       {% endfor %}
     </div>
+
+    {% if products %}
+
+    <div
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      {% for product in products %}
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <a href="{{ url_for('product_details', product_id=product.id) }}">
+          <img
+            src="{{ product.image }}"
+            alt="Product Image"
+            class="w-full h-40 object-cover mb-2"
+          />
+        </a>
+        <h2 class="text-lg font-semibold">{{ product.name }}</h2>
+        <p class="text-gray-600">Price: UGX{{ product.price }}</p>
+        <p class="text-gray-600">
+          Categories: {% for category in product.categories %}
+          <span class="mr-2">{{ category }}</span>
+          {% endfor %}
+        </p>
+        <p class="text-gray-600">Brand: {{ product.brand.name }}</p>
+        <form action="/add-to-cart/{{ product.id }}" method="GET">
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600 transition duration-300"
+          >
+            Add to Cart
+          </button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+
     {% else %}
     <p>No products yet.</p>
     {% endif %}
+    <div>
+      <div class="container mt-4 mt-4 flex">
+        <div class="testimonials-box flex-1">
+          <div class="testimonial">
+            <h2 class="title">Founder</h2>
+            <div class="testimonial-card">
+              <img
+                src="	https://res.cloudinary.com/dhdeg8ccz/image/upload/v1686748809/uyararnrwpxeeki1czwr.jpg"
+                alt="alan doe"
+                class="testimonial-banner"
+                width="80"
+                height="80"
+              />
+              <p class="testimonial-name">Tuta</p>
+              <p class="testimonial-title">CEO & Founder Invision</p>
+              <p class="testimonial-desc">
+                Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor dolor
+                sit amet.
+              </p>
+            </div>
+          </div>
+          <div class="cta-container flex-1">
+            <img
+              src="	https://res.cloudinary.com/dhdeg8ccz/image/upload/v1686833169/zu0zyrqc27bxkhgakaqs.jpg"
+              alt="summer collection"
+              class="cta-banner object-cover"
+            />
+            <a href="#" class="cta-content">
+              <p class="discount">25% Discount</p>
+              <h2 class="cta-title">Summer collection</h2>
+              <p class="cta-text">Starting @ UGX10,000</p>
+              <button class="cta-btn">Shop now</button>
+            </a>
+          </div>
+          <div class="service flex-1">
+            <h2 class="title">Our Services</h2>
+            <div class="service-container">
+              <a href="#" class="service-item">
+                <div class="service-icon">
+                  <ion-icon name="boat-outline"></ion-icon>
+                </div>
+                <div class="service-content">
+                  <h3 class="service-title">Worldwide Delivery</h3>
+                  <p class="service-desc">For Order Over 10,000</p>
+                </div>
+              </a>
+              <a href="#" class="service-item">
+                <div class="service-icon">
+                  <ion-icon name="rocket-outline"></ion-icon>
+                </div>
+                <div class="service-content">
+                  <h3 class="service-title">Next Day delivery</h3>
+                  <p class="service-desc">UK Orders Only</p>
+                </div>
+              </a>
+              <a href="#" class="service-item">
+                <div class="service-icon">
+                  <ion-icon name="call-outline"></ion-icon>
+                </div>
+                <div class="service-content">
+                  <h3 class="service-title">Best Online Support</h3>
+                  <p class="service-desc">Hours: 8AM - 11PM</p>
+                </div>
+              </a>
+              <a href="#" class="service-item">
+                <div class="service-icon">
+                  <ion-icon name="arrow-undo-outline"></ion-icon>
+                </div>
+                <div class="service-content">
+                  <h3 class="service-title">Return Policy</h3>
+                  <p class="service-desc">Easy & Free Return</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  {% endblock %}
 </div>
-{% endblock %}

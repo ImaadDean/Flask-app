@@ -142,8 +142,10 @@ def home():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     products = Product.query.all()
+    categories = Category.query.all()
     banners = Banner.query.all()
-    return render_template('index.html', products=products, banners=banners)
+    featured_products = Product.query.filter_by(featured=True).all()
+    return render_template('index.html', products=products, banners=banners, categories=categories, featured_products=featured_products)
 
 @app.route('/products')
 def products():
