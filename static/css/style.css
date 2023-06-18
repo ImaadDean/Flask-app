@@ -94,6 +94,9 @@ html {
   overscroll-behavior: contain;
 }
 
+.btn-bg{
+  background-color: var(--salmon-pink);
+}
 input {
   display: block;
   width: 100%;

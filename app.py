@@ -504,6 +504,11 @@ def add_category():
         return redirect(url_for('categories'))
 
     return render_template('add_category.html')
+@app.route('/category/<int:category_id>')
+def category_products(category_id):
+    category = Category.query.get_or_404(category_id)
+    products = category.products
+    return render_template('category_products.html', category=category, products=products)
 
 @app.route('/categories')
 def categories():
@@ -646,6 +651,10 @@ def add_banner():
 def banners():
     banners = Banner.query.all()
     return render_template('banners.html', banners=banners)
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 @app.route('/logout')
 def logout():
